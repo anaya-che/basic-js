@@ -23,7 +23,56 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper (matrix) {
+  // throw new NotImplementedError('Not implemented');
+  let coordinates = [];
+  let res = [];
+  matrix.forEach((el,i) => {
+    el.forEach((item,j) => {
+      if (item) coordinates.push([i,j])
+    })
+  })
+
+  if (coordinates.length === 0) {
+    matrix.forEach((el,i) => {
+      el.map((item,j) => {
+        matrix[i][j] = 0;
+      })
+    })
+    return matrix;
+  }
+  else {
+    matrix.forEach((el,i) => {
+      el.map((item,j) => {
+        matrix[i][j] = 0;
+      })
+    })
+    
+    coordinates.forEach((el,i) => {
+      if (i === 0) {
+        el.map((item,j) => {
+          if (j === 0) {
+            matrix[i][j+1] += 1;
+            matrix[i+1][j] += 1;
+            matrix[i+1][j+1] += 1;
+          }
+        })
+      }
+      if (i !== 0) {
+        el.map((item,j) => {
+          if (j < el.length && j !== 0) {
+            matrix[i-1][j-1] += 1;
+            matrix[i][j-1] += 1;
+            matrix[i+1][j-1] += 1;
+            matrix[i-1][j] += 1;
+            matrix[i+1][j] += 1;
+            matrix[i-1][j+1] += 1;
+            matrix[i][j+1] += 1;
+            matrix[i+1][j+1] += 1;
+          }
+        })
+      }
+    })
+    return matrix;
+  }
 }
